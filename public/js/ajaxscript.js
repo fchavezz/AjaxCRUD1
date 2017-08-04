@@ -1,4 +1,14 @@
-var url = "/products";
+var url = "/products"; // poner esta variable en la plantilla de blade  var url = "{{ route('route.name') }}";
+
+// AJAX SETUP debes ponerlo en tu layout principal (el que extiendes en tus vistas)
+//  AJAX SETUP es una configuracion global, no debe ser puesto en cada peticion ajax que hagas.
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+   }
+});
+
+
 
     //display modal form for product editing
     $(document).on('click','.open_modal',function(){
@@ -25,11 +35,7 @@ var url = "/products";
     //delete product and remove it from list
     $(document).on('click','.delete-product',function(){
         var product_id = $(this).val();
-         $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-            }
-        })
+       
         $.ajax({
             type: "DELETE",
             url: url + '/' + product_id,
@@ -45,11 +51,7 @@ var url = "/products";
 
     //create new product / update existing product
     $("#btn-save").click(function (e) {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-            }
-        })
+       
         e.preventDefault();
         var formData = {
             name: $('#name').val(),
